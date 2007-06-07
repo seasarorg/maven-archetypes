@@ -1,0 +1,13 @@
+<projectDescription>
+  <name>maven-archetype-seasar-struts-mayaa</name>
+  <comment>Seasar Maven Archetypes縺ｯMaven2繧貞茜逕ｨ縺励※蜷�遞ｮ繝励Ο繧ｸ繧ｧ繧ｯ繝医�ｮ縺ｲ縺ｪ蠖｢繧堤函謌舌☆繧九�励Ο繧ｸ繧ｧ繧ｯ繝医〒縺吶��</comment>
+  <projects/>
+  <buildSpec>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javabuilder</name>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.eclipse.jdt.core.javanature</nature>
+  </natures>
+</projectDescription>

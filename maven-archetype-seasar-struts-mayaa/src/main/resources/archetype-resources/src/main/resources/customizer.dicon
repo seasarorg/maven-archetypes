@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN" 
+	"http://www.seasar.org/dtd/components24.dtd">
+<components>
+	<include path="default-customizer.dicon"/>
+
+	<component name="propertyInterType" class="org.seasar.framework.aop.intertype.PropertyInterType" />
+	<component name="propertyInterTypeCustomizer" class="org.seasar.framework.container.customizer.InterTypeCustomizer">
+		<property name="interTypeName">"propertyInterType"</property>
+	</component>
+	<component name="actionCustomizer" class="org.seasar.framework.container.customizer.CustomizerChain">
+		<initMethod name="addCustomizer">
+			<arg>traceCustomizer</arg>
+		</initMethod>
+		<initMethod name="addCustomizer">
+			<arg>propertyInterTypeCustomizer</arg>
+		</initMethod>
+	</component>
+</components>
