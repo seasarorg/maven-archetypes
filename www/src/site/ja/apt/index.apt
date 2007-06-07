@@ -1,0 +1,31 @@
+概要
+
+  Seasar Maven ArchetypesはMaven2を利用して各種プロジェクトのひな形を生成するプロジェクトです。
+
+更新履歴
+
+  * 2007/6/6 Maven Archetype for Seasar&Struts&Mayaa 0.0.1をリリースしました
+
+利用方法
+
+  * Maven2をインストール(http://maven.apache.org/run-maven/index.html)
+  
+  * プロジェクトを作成したいディレクトリで以下のコマンドを実行(実際は1行で記述)
+
+----------------------------------------
+  mvn archetype:create -DgroupId=[作成するプロジェクトのgroupId] 
+                       -DartifactId=[作成するプロジェクトのartifactId]
+                       -Dversion=[作成するプロジェクトのバージョン]
+                       -DarchetypeGroupId=org.seasar.maven-archetypes
+                       -DarchetypeArtifactId=[ひな形として利用するArchetypeのartifactId]
+                       -DarchetypeVersion=[ひな形として利用するArchetypeのバージョン]
+                       -DremoteRepositories=http://maven.seasar.org/maven2/,https://www.seasar.org/maven/maven2-snapshot
+----------------------------------------
+
+提供しているArchetype
+
+*-----------------------------------------------------------*----------------------------------------*-----------------:
+|<<説明>>                                                   | <<artifactId>>                         | <<version>>     |
+*-----------------------------------------------------------*----------------------------------------*-----------------:
+|MayaaとStrutsを利用したWebアプリケーション(HotDeploy対応)  | maven-archetype-seasar-struts-mayaa    | 0.0.1           |
+*-----------------------------------------------------------*----------------------------------------*-----------------:
