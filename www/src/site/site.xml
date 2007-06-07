@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<project name="Seasar Maven Archetypes">
+	<skin>
+		<groupId>org.seasar.project</groupId>
+		<artifactId>seasar-skin</artifactId>
+		<version>0.1.0</version>
+	</skin>
+	<bannerLeft>
+		<name>Seasar Maven Archetypes</name>
+		<src>http://www.seasar.org/images/seasar_logo_blue.gif</src>
+		<href>http://maven-archetypes.sandbox.seasar.org/</href>
+	</bannerLeft>
+	<body>
+		<menu name="Index">
+			<item name="Top" href="index.html" />
+		</menu>
+		<menu name="Link">
+			<item name="Seasar.org" href="http://www.seasar.org/" />
+		</menu>
+		
+		<menu ref="reports" />
+	</body>
+</project>

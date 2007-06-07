@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.seasar.maven-archetypes</groupId>
+	<artifactId>maven-archetypes-project</artifactId>
+	<version>0.0.1</version>
+	<name>Seasar Maven Archetypes</name>
+	<description>
+		Seasar Maven ArchetypesはMaven2を利用して各種プロジェクトのひな形を生成するプロジェクトです。
+	</description>
+	<packaging>pom</packaging>
+	<scm>
+		<connection>
+			scm:svn:https://www.seasar.org/svn/sandbox/seasar-maven-archetypes/trunk/
+		</connection>
+		<developerConnection>
+			scm:svn:https://www.seasar.org/svn/sandbox/seasar-maven-archetypes/trunk/
+		</developerConnection>
+		<url>
+			https://www.seasar.org/svn/sandbox/seasar-maven-archetypes/trunk/
+		</url>
+	</scm>
+	<developers>
+		<developer>
+			<id>matobat</id>
+			<name>Matoba Tatsunori</name>
+			<email></email>
+			<url>http://d.hatena.ne.jp/matobat/</url>
+			<timezone>+9</timezone>
+		</developer>
+	</developers>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<issueManagement>
+		<system>JIRA</system>
+		<url>https://www.seasar.org/issues/browse/STRUTSSEASARPLUGIN</url>
+	</issueManagement>
+	<mailingLists>
+		<mailingList>
+			<name>Seasar-user</name>
+			<subscribe>
+				http://lists.sourceforge.jp/mailman/listinfo/seasar-user
+			</subscribe>
+			<unsubscribe>
+				http://lists.sourceforge.jp/mailman/listinfo/seasar-user
+			</unsubscribe>
+			<post>seasar-user@lists.sourceforge.jp</post>
+			<archive>
+				http://lists.sourceforge.jp/mailman/archives/seasar-user/
+			</archive>
+		</mailingList>
+		<mailingList>
+			<name>Seasar-dev</name>
+			<subscribe>
+				http://lists.sourceforge.jp/mailman/listinfo/seasar-dev
+			</subscribe>
+			<unsubscribe>
+				http://lists.sourceforge.jp/mailman/listinfo/seasar-dev
+			</unsubscribe>
+			<post>seasar-dev@lists.sourceforge.jp</post>
+			<archive>
+				http://lists.sourceforge.jp/mailman/archives/seasar-dev/
+			</archive>
+		</mailingList>
+		<mailingList>
+			<name>Seasar-user-en</name>
+			<subscribe>
+				https://www.seasar.org/mailman/listinfo/seasar-user-en
+			</subscribe>
+			<unsubscribe>
+				https://www.seasar.org/mailman/listinfo/seasar-user-en
+			</unsubscribe>
+			<post>seasar-user-en@ml.seasar.org</post>
+			<archive>
+				http://ml.seasar.org/archives/seasar-user-en/
+			</archive>
+		</mailingList>
+	</mailingLists>
+
+	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-webdav</artifactId>
+			</extension>
+		</extensions>
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>site</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<mkdir dir="target/site/en" />
+								<move todir="target/site/en">
+									<fileset dir="target/site">
+										<exclude name="ja/" />
+										<exclude name="en/" />
+										<exclude name="index.html.*" />
+									</fileset>
+								</move>
+								<delete>
+									<fileset dir="target/site"
+										includes="**/index.html.*">
+										<exclude name="index.html.*" />
+									</fileset>
+								</delete>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.2</version>
+		</dependency>
+	</dependencies>
+	<distributionManagement>
+		<repository>
+			<uniqueVersion>false</uniqueVersion>
+			<id>maven.seasar.org</id>
+			<name>The Seasar Foundation Maven2 Repository</name>
+			<url>dav:https://www.seasar.org/maven/maven2</url>
+		</repository>
+		<snapshotRepository>
+			<uniqueVersion>true</uniqueVersion>
+			<id>maven.seasar.org</id>
+			<name>
+				The Seasar Foundation Maven2 Snapshot Repository
+			</name>
+			<url>dav:https://www.seasar.org/maven/maven2-snapshot</url>
+		</snapshotRepository>
+		<site>
+			<id>maven.seasar.org</id>
+			<url>file://${basedir}/</url>
+		</site>
+	</distributionManagement>
+	<reporting>
+		<plugins>
+			<plugin>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>2.0-beta-5</version>
+				<configuration>
+					<locales>en,ja</locales>
+					<outputEncoding>UTF-8</outputEncoding>
+					<inputEncoding>UTF-8</inputEncoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changes-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>
+					maven-project-info-reports-plugin
+				</artifactId>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>changes-report</report>
+							<report>scm</report>
+							<report>project-team</report>
+							<report>issue-tracking</report>
+							<report>license</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+		</plugins>
+	</reporting>
+	<repositories>
+		<repository>
+			<id>maven.seasar.org</id>
+			<name>The Seasar Foundation Maven2 Repository</name>
+			<url>http://maven.seasar.org/maven2</url>
+		</repository>
+	</repositories>
+</project>
+
