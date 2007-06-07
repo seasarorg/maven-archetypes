@@ -13,13 +13,13 @@
 	<packaging>pom</packaging>
 	<scm>
 		<connection>
-			scm:svn:https://www.seasar.org/svn/sandbox/seasar-maven-archetypes/trunk/
+			scm:svn:https://www.seasar.org/svn/sandbox/maven-archetypes/trunk/
 		</connection>
 		<developerConnection>
-			scm:svn:https://www.seasar.org/svn/sandbox/seasar-maven-archetypes/trunk/
+			scm:svn:https://www.seasar.org/svn/sandbox/maven-archetypes/trunk/
 		</developerConnection>
 		<url>
-			https://www.seasar.org/svn/sandbox/seasar-maven-archetypes/trunk/
+			https://www.seasar.org/svn/sandbox/maven-archetypes/trunk/
 		</url>
 	</scm>
 	<developers>
