@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="Shift_JIS" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"
+	debug="false">
+	<appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+		<errorHandler
+			class="org.apache.log4j.helpers.OnlyOnceErrorHandler" />
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d [%t] %-5p %c - %m%n" />
+		</layout>
+	</appender>
+
+	<!-- その他 -->
+	<category name="org.seasar">
+		<priority value="info" />
+	</category>
+
+	<root>
+		<priority value="info" />
+		<appender-ref ref="STDOUT" />
+	</root>
+</log4j:configuration>

@@ -3,5 +3,4 @@
 	"http://www.seasar.org/dtd/components24.dtd">
 <components>
 	<include path="default-customizer.dicon"/>
-
 </components>

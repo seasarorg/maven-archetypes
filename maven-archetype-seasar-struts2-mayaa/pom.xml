@@ -1,41 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="Shift_JIS"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.seasar.mayaa</groupId>
+	<groupId>org.seasar.maven-archetypes</groupId>
 	<artifactId>maven-archetype-seasar-struts2-mayaa</artifactId>
+	<version>0.0.1</version>
 	<packaging>maven-plugin</packaging>
-	<version>0.0.1-SNAPSHOT</version>
-	<build>
-		<extensions>
-			<extension>
-				<groupId>org.apache.maven.wagon</groupId>
-				<artifactId>wagon-webdav</artifactId>
-			</extension>
-		</extensions>
-	</build>
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.2</version>
-		</dependency>
-	</dependencies>
-	<distributionManagement>
-		<repository>
-			<uniqueVersion>false</uniqueVersion>
-			<id>maven.seasar.org</id>
-			<name>The Seasar Foundation Maven2 Repository</name>
-			<url>dav:https://www.seasar.org/maven/maven2</url>
-		</repository>
-		<snapshotRepository>
-			<id>maven.seasar.org</id>
-			<name>
-				The Seasar Foundation Maven2 Snapshot Repository
-			</name>
-			<url>dav:https://www.seasar.org/maven/maven2-snapshot</url>
-		</snapshotRepository>
-	</distributionManagement>
+	<name>Maven Archetype for Seasar&amp;amp;Struts2&amp;amp;Mayaa</name>
+	<parent>
+		<artifactId>maven-archetypes-project</artifactId>
+		<groupId>org.seasar.maven-archetypes</groupId>
+		<version>0.0.1</version>
+	</parent>
 </project>
-

@@ -3,16 +3,11 @@
 	<sources>
 		<source>src/main/java/index/IndexAction.java</source>
 		<source>src/main/java/index/IndexService.java</source>
-		<source>
-			src/main/java/index/impl/IndexServiceImpl.java
-		</source>
+		<source>src/main/java/index/impl/IndexServiceImpl.java</source>
 	</sources>
 	<resources>
 		<resource>src/main/resources/struts.xml</resource>
-		<resource>
-			src/main/resources/commons-logging.properties
-		</resource>
-		<resource>src/main/resources/simplelog.properties</resource>
+		<resource>src/main/resources/log4j.xml</resource>
 		<resource>src/main/resources/app.dicon</resource>
 		<resource>src/main/resources/convention.dicon</resource>
 		<resource>src/main/resources/creator.dicon</resource>
