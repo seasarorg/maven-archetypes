@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+         <wizard
+               category="Seasar Maven Archetypes"
+               class="org.seasar.maven.archetypes.eclipse.plugin.NewProjectWizard"
+               hasPages="true"
+               id="org.seasar.maven.archetypes.eclipse.plugin.s2struts.mayaa.NewProjectWizard"
+               name="S2Struts+Mayaa Project"
+               project="true">
+         </wizard>
+   </extension>
+
+</plugin>

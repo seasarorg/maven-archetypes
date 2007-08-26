@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Seasar Maven Archetypes Eclipse Plugin
+Bundle-SymbolicName: seasar-maven-archetypes-eclipse-plugin;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.seasar.maven.archetypes.eclipse.plugin.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.eclipse.ui,
+ org.eclipse.ui.ide,
+ org.eclipse.jdt.core,
+ org.eclipse.debug.core,
+ org.eclipse.debug.ui,
+ org.eclipse.ui.externaltools
+Eclipse-LazyStart: true
