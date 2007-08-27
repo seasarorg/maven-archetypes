@@ -8,10 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -58,7 +62,17 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 		eclipseTask.add("mvn.bat");
 		eclipseTask.add("eclipse:eclipse");
 
-		final String directory = projectPage.getLocationPath().toOSString();
+		final IPath directory;
+		final boolean defaultLocation;
+		if (projectPage.getLocationPath().equals(Platform.getLocation())) {
+			directory = Path.fromOSString(projectPage.getLocationPath()
+					.toOSString()
+					+ "/" + projectName);
+			defaultLocation = true;
+		} else {
+			directory = projectPage.getLocationPath();
+			defaultLocation = false;
+		}
 
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 			public void run(IProgressMonitor monitor)
@@ -68,7 +82,8 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 					try {
 						ProcessBuilder processBuilder = new ProcessBuilder(
 								mavenTask.toArray(new String[0]));
-						processBuilder.directory(new File(directory));
+						processBuilder.directory(directory.toFile()
+								.getParentFile());
 						Process process = processBuilder.start();
 						InputStream stream = process.getInputStream();
 						while (true) {
@@ -82,8 +97,7 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 
 						processBuilder.command(eclipseTask
 								.toArray(new String[0]));
-						processBuilder.directory(new File(directory + "/"
-								+ projectName));
+						processBuilder.directory(directory.toFile());
 						process = processBuilder.start();
 						stream = process.getInputStream();
 						while (true) {
@@ -105,11 +119,17 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 					// Retreive the project handle
 					IProject project = root.getProject(projectName);
 
-					// Create project resources in Eclipse
-					project.create(null);
+					if (defaultLocation) {
+						project.create(monitor);
+					} else {
+						IProjectDescription desc = project.getWorkspace()
+								.newProjectDescription(project.getName());
+						desc.setLocation(directory);
+						project.create(desc, monitor);
+					}
 
 					// Open up this newly-created project in Eclipse
-					project.open(null);
+					project.open(monitor);
 
 					monitor.worked(1);
 				} catch (CoreException e) {
