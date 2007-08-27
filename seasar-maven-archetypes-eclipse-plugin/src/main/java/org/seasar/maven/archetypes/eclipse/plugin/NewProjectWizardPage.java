@@ -19,17 +19,13 @@ import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
 
 public class NewProjectWizardPage extends WizardNewProjectCreationPage {
 
-	private Text rootPkgName;
+	private Text groupId;
+	private Text rootPackage;
+	private Text version;
 
 	private Combo projectType;
 
-	private Map<String, String> selectedProjectTypes = new TreeMap<String, String>();
-
-	private Button useDefaultJre;
-
-	private Button selectJre;
-
-	private Combo enableJres;
+	private Map<String, Archetype> selectedProjectTypes = new TreeMap<String, Archetype>();
 
 	/**
 	 * @param pageName
@@ -37,16 +33,18 @@ public class NewProjectWizardPage extends WizardNewProjectCreationPage {
 	@SuppressWarnings("unchecked")
 	public NewProjectWizardPage() {
 		super("SeasarMavenArchetypesProjectWizard");
+		selectedProjectTypes = Activator.getDefault().getExtensionLoader()
+				.getArchetypes();
 	}
 
 	public void createControl(Composite parent) {
 		super.createControl(parent);
 		Composite composite = (Composite) getControl();
-		createRootPackage(composite);
+		createGroupId(composite);
 		createProjectType(composite);
 	}
 
-	private void createRootPackage(Composite parent) {
+	private void createGroupId(Composite parent) {
 		Composite composite = new Composite(parent, SWT.NONE);
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 2;
@@ -57,12 +55,28 @@ public class NewProjectWizardPage extends WizardNewProjectCreationPage {
 		label.setText("グループID");
 		label.setFont(parent.getFont());
 
-		this.rootPkgName = new Text(composite, SWT.BORDER);
+		this.groupId = new Text(composite, SWT.BORDER);
 		GridData data = new GridData(GridData.FILL_HORIZONTAL);
 		data.widthHint = 250;
-		this.rootPkgName.setLayoutData(data);
-		this.rootPkgName.setFont(parent.getFont());
-		this.rootPkgName.addListener(SWT.Modify, new Listener() {
+		this.groupId.setLayoutData(data);
+		this.groupId.setFont(parent.getFont());
+
+		label = new Label(composite, SWT.NONE);
+		label.setText("バージョン");
+		label.setFont(parent.getFont());
+
+		this.version = new Text(composite, SWT.BORDER);
+		this.version.setLayoutData(data);
+		this.version.setFont(parent.getFont());
+
+		label = new Label(composite, SWT.NONE);
+		label.setText("ルートパッケージ");
+		label.setFont(parent.getFont());
+
+		this.rootPackage = new Text(composite, SWT.BORDER);
+		this.rootPackage.setLayoutData(data);
+		this.rootPackage.setFont(parent.getFont());
+		this.rootPackage.addListener(SWT.Modify, new Listener() {
 			public void handleEvent(Event event) {
 				boolean is = validatePage();
 				if (is == false) {
@@ -96,35 +110,84 @@ public class NewProjectWizardPage extends WizardNewProjectCreationPage {
 	}
 
 	protected boolean validatePage() {
-		return super.validatePage() ? !validateRootPackageName().trim().equals(
+		return super.validatePage() ? validateRootPackageName().trim().equals(
 				"") : false;
 	}
 
 	protected String validateRootPackageName() {
-		String name = getRootPackageName();
+		String name = getRootPackage();
 		if (name.trim().equals("")) {
 			return "パッケージ名が空です";
 		}
 		IStatus val = JavaConventions.validatePackageName(name);
 		if (val.getSeverity() == IStatus.ERROR
 				|| val.getSeverity() == IStatus.WARNING) {
-			return "パッケージ名がいまいち";
+			return "グループIDが不正です";
 		}
-		return null;
+		return "";
 	}
 
-	public String getRootPackageName() {
-		if (rootPkgName == null) {
+	public String getGroupID() {
+		if (groupId == null) {
 			return "";
 		}
-		return rootPkgName.getText();
+		return groupId.getText();
 	}
 
-	public String getRootPackagePath() {
-		return getRootPackageName().replace('.', '/');
+	public String getRootPackage() {
+		if (rootPackage == null) {
+			return "";
+		}
+		return rootPackage.getText();
 	}
 
-	public String getProjectTypeKey() {
-		return (String) selectedProjectTypes.get(this.projectType.getText());
+	public Archetype getProjectType() {
+		return selectedProjectTypes.get(this.projectType.getText());
+	}
+
+	public String getVersion() {
+		if (version == null) {
+			return "";
+		}
+		return version.getText();
+	}
+
+	public static class Archetype {
+		private String name;
+		private String groupId;
+		private String artifactId;
+		private String version;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getGroupId() {
+			return groupId;
+		}
+
+		public void setGroupId(String groupId) {
+			this.groupId = groupId;
+		}
+
+		public String getArtifactId() {
+			return artifactId;
+		}
+
+		public void setArtifactId(String artifactId) {
+			this.artifactId = artifactId;
+		}
+
+		public String getVersion() {
+			return version;
+		}
+
+		public void setVersion(String version) {
+			this.version = version;
+		}
 	}
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
 <plugin>
+   <extension-point id="archetype" name="Archetype" schema="schema/archetype.exsd"/>
    <extension
          point="org.eclipse.ui.newWizards">
          <wizard
@@ -8,9 +9,23 @@
                class="org.seasar.maven.archetypes.eclipse.plugin.NewProjectWizard"
                hasPages="true"
                id="org.seasar.maven.archetypes.eclipse.plugin.s2struts.mayaa.NewProjectWizard"
-               name="S2Struts+Mayaa Project"
+               name="Maven Archetype Project"
                project="true">
          </wizard>
    </extension>
-
+   <extension
+         point="seasar-maven-archetypes-eclipse-plugin.archetype">
+         <archetype
+               artifactId="maven-archetype-seasar-struts-mayaa"
+               groupId="org.seasar.maven-archetypes"
+               version="0.0.1"
+               name="S2Struts+Mayaa">
+         </archetype>
+         <archetype
+               artifactId="maven-archetype-seasar-struts2-mayaa"
+               groupId="org.seasar.maven-archetypes"
+               version="0.0.1"
+               name="Struts2+Mayaa">
+         </archetype>
+   </extension>
 </plugin>

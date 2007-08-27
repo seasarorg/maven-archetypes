@@ -14,6 +14,8 @@ public class Activator extends AbstractUIPlugin {
 	// The shared instance
 	private static Activator plugin;
 
+	private ExtensionLoader extensionLoader = new ExtensionLoader();
+
 	/**
 	 * The constructor
 	 */
@@ -28,6 +30,7 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+		extensionLoader.loadExtension();
 	}
 
 	/*
@@ -47,6 +50,10 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public static Activator getDefault() {
 		return plugin;
+	}
+
+	public ExtensionLoader getExtensionLoader() {
+		return extensionLoader;
 	}
 
 }
