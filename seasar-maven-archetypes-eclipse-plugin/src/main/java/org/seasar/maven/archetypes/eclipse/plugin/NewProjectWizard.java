@@ -1,6 +1,5 @@
 package org.seasar.maven.archetypes.eclipse.plugin;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -20,18 +19,19 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 
 public class NewProjectWizard extends Wizard implements INewWizard {
 	private NewProjectWizardPage projectPage;
-	private Shell shell;
 
 	public NewProjectWizard() {
 		setWindowTitle("New Project");
 	}
 
+	/**
+	 * プロジェクトを作成
+	 */
 	public boolean performFinish() {
 		final String projectName = projectPage.getProjectName();
 
@@ -42,12 +42,12 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 		mavenTask
 				.add("-DremoteRepositories=http://maven.seasar.org/maven2/,https://www.seasar.org/maven/maven2-snapshot");
 		mavenTask.add("-DarchetypeGroupId="
-				+ projectPage.getProjectType().getGroupId());
+				+ projectPage.getArchetype().getGroupId());
 		mavenTask.add("-DarchetypeArtifactId="
-				+ projectPage.getProjectType().getArtifactId());
-		if (projectPage.getProjectType().getVersion() != null) {
+				+ projectPage.getArchetype().getArtifactId());
+		if (projectPage.getArchetype().getVersion() != null) {
 			mavenTask.add("-DarchetypeVersion="
-					+ projectPage.getProjectType().getVersion());
+					+ projectPage.getArchetype().getVersion());
 		}
 
 		mavenTask.add("-DgroupId=" + projectPage.getGroupID());
@@ -160,12 +160,10 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 	}
 
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
-		shell = workbench.getActiveWorkbenchWindow().getShell();
 	}
 
 	public void addPages() {
 		projectPage = new NewProjectWizardPage();
-
 		addPage(projectPage);
 		super.addPages();
 	}
