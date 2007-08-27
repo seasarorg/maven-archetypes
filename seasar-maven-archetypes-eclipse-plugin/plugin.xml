@@ -2,6 +2,7 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension-point id="archetype" name="Archetype" schema="schema/archetype.exsd"/>
+   <extension-point id="remoteRepository" name="remoteRepository" schema="schema/remoteRepository.exsd"/>
    <extension
          point="org.eclipse.ui.newWizards">
          <wizard
@@ -27,5 +28,14 @@
                version="0.0.1"
                name="Struts2+Mayaa">
          </archetype>
+   </extension>
+   <extension
+         point="seasar-maven-archetypes-eclipse-plugin.remoteRepository">
+      <remoteRepository
+            uri="http://maven.seasar.org/maven2/">
+      </remoteRepository>
+      <remoteRepository
+            uri="https://www.seasar.org/maven/maven2-snapshot">
+      </remoteRepository>
    </extension>
 </plugin>

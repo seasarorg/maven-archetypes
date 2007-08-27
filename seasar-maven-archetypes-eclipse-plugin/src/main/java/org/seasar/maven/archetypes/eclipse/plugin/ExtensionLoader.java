@@ -1,5 +1,7 @@
 package org.seasar.maven.archetypes.eclipse.plugin;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -13,14 +15,22 @@ import org.eclipse.core.runtime.Platform;
  * 拡張ポイントを読み込む。
  */
 public class ExtensionLoader {
-	public static final String EXTENSION_POINT_ID = Activator.PLUGIN_ID
+	public static final String ARCHETYPE_EXTENSION_POINT_ID = Activator.PLUGIN_ID
 			+ ".archetype";
-
+	public static final String REMOTEREPOSITORY_EXTENSION_POINT_ID = Activator.PLUGIN_ID
+			+ ".remoteRepository";
 	private Map<String, Archetype> archetypes = new TreeMap<String, Archetype>();
+	private List<String> remoteRepositories = new ArrayList<String>();
 
 	public void loadExtension() {
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
-		IExtensionPoint point = registry.getExtensionPoint(EXTENSION_POINT_ID);
+		loadArchetypeExtension(registry);
+		loadRemoteRepositoryExtension(registry);
+	}
+
+	private void loadArchetypeExtension(IExtensionRegistry registry) {
+		IExtensionPoint point = registry
+				.getExtensionPoint(ARCHETYPE_EXTENSION_POINT_ID);
 		if (point == null) {
 			return;
 		}
@@ -50,7 +60,36 @@ public class ExtensionLoader {
 		}
 	}
 
+	private void loadRemoteRepositoryExtension(IExtensionRegistry registry) {
+		IExtensionPoint point = registry
+				.getExtensionPoint(REMOTEREPOSITORY_EXTENSION_POINT_ID);
+		if (point == null) {
+			return;
+		}
+
+		IExtension[] extensions = point.getExtensions();
+		for (IExtension extension : extensions) {
+			IConfigurationElement[] configurationElements = extension
+					.getConfigurationElements();
+			for (IConfigurationElement configurationElement : configurationElements) {
+				if ("remoteRepository".equals(configurationElement.getName())) {
+					String uri = configurationElement.getAttribute("uri");
+					remoteRepositories.add(uri);
+				}
+			}
+		}
+	}
+
 	public Map<String, Archetype> getArchetypes() {
 		return archetypes;
 	}
+
+	public List<String> getRemoteRepositories() {
+		return remoteRepositories;
+	}
+
+	public void setRemoteRepositories(List<String> remoteRepositories) {
+		this.remoteRepositories = remoteRepositories;
+	}
+
 }

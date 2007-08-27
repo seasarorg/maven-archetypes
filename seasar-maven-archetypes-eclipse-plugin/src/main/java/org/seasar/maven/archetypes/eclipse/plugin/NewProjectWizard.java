@@ -39,8 +39,14 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 		final List<String> mavenTask = new ArrayList<String>();
 		mavenTask.add("mvn.bat");
 		mavenTask.add("archetype:create");
-		mavenTask
-				.add("-DremoteRepositories=http://maven.seasar.org/maven2/,https://www.seasar.org/maven/maven2-snapshot");
+
+		StringBuilder stringBuilder = new StringBuilder();
+		for (String string : Activator.getDefault().getExtensionLoader()
+				.getRemoteRepositories()) {
+			stringBuilder.append(string + ",");
+		}
+
+		mavenTask.add("-DremoteRepositories=" + stringBuilder);
 		mavenTask.add("-DarchetypeGroupId="
 				+ projectPage.getArchetype().getGroupId());
 		mavenTask.add("-DarchetypeArtifactId="
