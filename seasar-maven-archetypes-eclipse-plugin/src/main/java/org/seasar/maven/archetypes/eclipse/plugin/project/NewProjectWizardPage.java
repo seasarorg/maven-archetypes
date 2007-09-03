@@ -1,4 +1,4 @@
-package org.seasar.maven.archetypes.eclipse.plugin;
+package org.seasar.maven.archetypes.eclipse.plugin.project;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -16,10 +16,12 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
 
+/**
+ * Maven2のArchetypeを利用した新規プロジェクトウィザードの設定ページ
+ */
 public class NewProjectWizardPage extends WizardNewProjectCreationPage {
 
 	private Text groupId;
-	private Text rootPackage;
 	private Text version;
 
 	private Combo archetypes;
@@ -65,19 +67,9 @@ public class NewProjectWizardPage extends WizardNewProjectCreationPage {
 		this.groupId.setLayoutData(data);
 		this.groupId.setFont(parent.getFont());
 
-		label = new Label(composite, SWT.NONE);
-		label.setText("ルートパッケージ");
-		label.setFont(parent.getFont());
-
-		this.rootPackage = new Text(composite, SWT.BORDER);
-		this.rootPackage.setLayoutData(data);
-		this.rootPackage.setFont(parent.getFont());
-		this.rootPackage.addListener(SWT.Modify, new Listener() {
+		this.groupId.addListener(SWT.Modify, new Listener() {
 			public void handleEvent(Event event) {
 				boolean is = validatePage();
-				if (is == false) {
-					setErrorMessage(validateRootPackageName());
-				}
 				setPageComplete(is);
 			}
 		});
@@ -118,8 +110,21 @@ public class NewProjectWizardPage extends WizardNewProjectCreationPage {
 	 * 入力チェック
 	 */
 	protected boolean validatePage() {
-		return super.validatePage() ? validateRootPackageName().trim().equals(
-				"") : false;
+		return super.validatePage() && validateGroupId();
+	}
+
+	/**
+	 * プロジェクト名の入力チェック
+	 * 
+	 * @return
+	 */
+	protected boolean validateProjectName() {
+		String name = getProjectName();
+		if (name.trim().equals("")) {
+			setErrorMessage("プロジェクト名が空です");
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -127,17 +132,19 @@ public class NewProjectWizardPage extends WizardNewProjectCreationPage {
 	 * 
 	 * @return
 	 */
-	protected String validateRootPackageName() {
-		String name = getRootPackage();
+	protected boolean validateGroupId() {
+		String name = getGroupID();
 		if (name.trim().equals("")) {
-			return "パッケージ名が空です";
+			setErrorMessage("グループIDが空です");
+			return false;
 		}
 		IStatus val = JavaConventions.validatePackageName(name);
 		if (val.getSeverity() == IStatus.ERROR
 				|| val.getSeverity() == IStatus.WARNING) {
-			return "グループIDが不正です";
+			setErrorMessage("グループIDが不正です");
+			return false;
 		}
-		return "";
+		return true;
 	}
 
 	/**
@@ -150,18 +157,6 @@ public class NewProjectWizardPage extends WizardNewProjectCreationPage {
 			return "";
 		}
 		return groupId.getText();
-	}
-
-	/**
-	 * ルートパッケージを取得
-	 * 
-	 * @return ルートパッケージ
-	 */
-	public String getRootPackage() {
-		if (rootPackage == null) {
-			return "";
-		}
-		return rootPackage.getText();
 	}
 
 	/**

@@ -1,4 +1,4 @@
-package org.seasar.maven.archetypes.eclipse.plugin;
+package org.seasar.maven.archetypes.eclipse.plugin.project;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -9,7 +9,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "seasar-maven-archetypes-eclipse-plugin";
+	public static final String PLUGIN_ID = "org.seasar.maven.archetypes.eclipse.plugin.project";
 
 	// The shared instance
 	private static Activator plugin;

@@ -6,16 +6,19 @@
    <extension
          point="org.eclipse.ui.newWizards">
          <wizard
-               category="Seasar Maven Archetypes"
-               class="org.seasar.maven.archetypes.eclipse.plugin.NewProjectWizard"
-               hasPages="true"
-               id="org.seasar.maven.archetypes.eclipse.plugin.s2struts.mayaa.NewProjectWizard"
+               id="org.seasar.maven.archetypes.eclipse.plugin.project.NewProjectWizard"
                name="Maven Archetype Project"
-               project="true">
+               class="org.seasar.maven.archetypes.eclipse.plugin.project.NewProjectWizard"
+               category="maven2.archetype"
+               hasPages="true"
+               project="true"
+               icon="icons/newprj_wiz.gif">
          </wizard>
+         <category id="maven2.archetype" name="Maven2 Archetype">
+         </category>
    </extension>
    <extension
-         point="seasar-maven-archetypes-eclipse-plugin.archetype">
+         point="org.seasar.maven.archetypes.eclipse.plugin.project.archetype">
          <archetype
                artifactId="maven-archetype-seasar-struts-mayaa"
                groupId="org.seasar.maven-archetypes"
@@ -30,7 +33,7 @@
          </archetype>
    </extension>
    <extension
-         point="seasar-maven-archetypes-eclipse-plugin.remoteRepository">
+         point="org.seasar.maven.archetypes.eclipse.plugin.project.remoteRepository">
       <remoteRepository
             uri="http://maven.seasar.org/maven2/">
       </remoteRepository>

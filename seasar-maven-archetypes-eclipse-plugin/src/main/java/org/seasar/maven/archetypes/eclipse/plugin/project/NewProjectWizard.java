@@ -1,4 +1,4 @@
-package org.seasar.maven.archetypes.eclipse.plugin;
+package org.seasar.maven.archetypes.eclipse.plugin.project;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,11 +22,14 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 
+/**
+ * Maven2のArchetypeを利用した新規プロジェクトウィザード
+ */
 public class NewProjectWizard extends Wizard implements INewWizard {
 	private NewProjectWizardPage projectPage;
 
 	public NewProjectWizard() {
-		setWindowTitle("New Project");
+		setWindowTitle("Maven2 Archetype Project");
 	}
 
 	/**
@@ -35,8 +38,9 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 	public boolean performFinish() {
 		final String projectName = projectPage.getProjectName();
 
-		// Create the Task strings
 		final List<String> mavenTask = new ArrayList<String>();
+
+		// TODO:Windows以外を考慮
 		mavenTask.add("mvn.bat");
 		mavenTask.add("archetype:create");
 
@@ -57,7 +61,6 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 		}
 
 		mavenTask.add("-DgroupId=" + projectPage.getGroupID());
-		mavenTask.add("-Dpackage=" + projectPage.getRootPackage());
 		mavenTask.add("-DartifactId=" + projectPage.getProjectName());
 
 		if (projectPage.getVersion() != null) {
@@ -80,12 +83,14 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 			defaultLocation = false;
 		}
 
+		// TODO:実行中の表示がわかるようにする
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 			public void run(IProgressMonitor monitor)
 					throws InvocationTargetException {
 
 				try {
 					try {
+						// mvn archetype:createを実行
 						ProcessBuilder processBuilder = new ProcessBuilder(
 								mavenTask.toArray(new String[0]));
 						processBuilder.directory(directory.toFile()
@@ -98,9 +103,11 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 								stream.close();
 								break;
 							}
+							// TODO:コンソール出力に変更
 							System.out.print((char) c);
 						}
 
+						// mvn eclipse:eclipseを実行
 						processBuilder.command(eclipseTask
 								.toArray(new String[0]));
 						processBuilder.directory(directory.toFile());
@@ -112,17 +119,15 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 								stream.close();
 								break;
 							}
+							// TODO:コンソール出力に変更
 							System.out.print((char) c);
 						}
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 
-					// Retreive the workspace root
 					IWorkspaceRoot root = ResourcesPlugin.getWorkspace()
 							.getRoot();
-
-					// Retreive the project handle
 					IProject project = root.getProject(projectName);
 
 					if (defaultLocation) {
@@ -139,10 +144,8 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 
 					monitor.worked(1);
 				} catch (CoreException e) {
-
 					throw new InvocationTargetException(e);
 				} finally {
-
 					monitor.done();
 				}
 			}

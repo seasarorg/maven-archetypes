@@ -1,9 +1,16 @@
-package org.seasar.maven.archetypes.eclipse.plugin;
+package org.seasar.maven.archetypes.eclipse.plugin.project;
 
+/**
+ * Archetype定義
+ */
 public class Archetype {
+	/** 表示名 */
 	private String name;
+	/** グループID */
 	private String groupId;
+	/** アーティファクトID */
 	private String artifactId;
+	/** バージョン */
 	private String version;
 
 	public String getName() {

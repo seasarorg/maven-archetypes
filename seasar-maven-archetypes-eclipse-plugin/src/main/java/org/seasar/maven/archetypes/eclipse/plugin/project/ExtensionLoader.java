@@ -1,4 +1,4 @@
-package org.seasar.maven.archetypes.eclipse.plugin;
+package org.seasar.maven.archetypes.eclipse.plugin.project;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 
 /**
- * 拡張ポイントを読み込む。
+ * 拡張を読み込む。
  */
 public class ExtensionLoader {
 	public static final String ARCHETYPE_EXTENSION_POINT_ID = Activator.PLUGIN_ID
@@ -28,6 +28,9 @@ public class ExtensionLoader {
 		loadRemoteRepositoryExtension(registry);
 	}
 
+	/**
+	 * Archetypeの拡張を読み込む。
+	 */
 	private void loadArchetypeExtension(IExtensionRegistry registry) {
 		IExtensionPoint point = registry
 				.getExtensionPoint(ARCHETYPE_EXTENSION_POINT_ID);
@@ -60,6 +63,9 @@ public class ExtensionLoader {
 		}
 	}
 
+	/**
+	 * RemoteRepositoryの拡張を読み込む
+	 */
 	private void loadRemoteRepositoryExtension(IExtensionRegistry registry) {
 		IExtensionPoint point = registry
 				.getExtensionPoint(REMOTEREPOSITORY_EXTENSION_POINT_ID);
