@@ -21,12 +21,22 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.console.ConsolePlugin;
+import org.eclipse.ui.console.IConsole;
+import org.eclipse.ui.console.IConsoleManager;
+import org.eclipse.ui.console.MessageConsole;
+import org.eclipse.ui.console.MessageConsoleStream;
 
 /**
  * Maven2のArchetypeを利用した新規プロジェクトウィザード
  */
 public class NewProjectWizard extends Wizard implements INewWizard {
 	private NewProjectWizardPage projectPage;
+
+	// メッセージコンソールのフィールド
+	private MessageConsole console = null;
+	// メッセージコンソールのデータストリーム
+	private MessageConsoleStream consoleStream = null;
 
 	public NewProjectWizard() {
 		setWindowTitle("Maven2 Archetype Project");
@@ -39,6 +49,14 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 		final String projectName = projectPage.getProjectName();
 
 		final List<String> mavenTask = new ArrayList<String>();
+
+		// コンソール
+		console = new MessageConsole("Maven Archetype Project", null);
+		consoleStream = console.newMessageStream();
+		IConsoleManager manager = ConsolePlugin.getDefault()
+				.getConsoleManager();
+		manager.addConsoles(new IConsole[] { console });
+		manager.showConsoleView(console);
 
 		// TODO:Windows以外を考慮
 		mavenTask.add("mvn.bat");
@@ -55,15 +73,13 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 				+ projectPage.getArchetype().getGroupId());
 		mavenTask.add("-DarchetypeArtifactId="
 				+ projectPage.getArchetype().getArtifactId());
-		if (projectPage.getArchetype().getVersion() != null) {
-			mavenTask.add("-DarchetypeVersion="
-					+ projectPage.getArchetype().getVersion());
-		}
+		mavenTask.add("-DarchetypeVersion="
+				+ projectPage.getArchetype().getVersion());
 
 		mavenTask.add("-DgroupId=" + projectPage.getGroupID());
 		mavenTask.add("-DartifactId=" + projectPage.getProjectName());
 
-		if (projectPage.getVersion() != null) {
+		if (!"".equals(projectPage.getArchetype().getVersion())) {
 			mavenTask.add("-Dversion=" + projectPage.getVersion());
 		}
 
@@ -83,7 +99,6 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 			defaultLocation = false;
 		}
 
-		// TODO:実行中の表示がわかるようにする
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 			public void run(IProgressMonitor monitor)
 					throws InvocationTargetException {
@@ -103,8 +118,7 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 								stream.close();
 								break;
 							}
-							// TODO:コンソール出力に変更
-							System.out.print((char) c);
+							consoleStream.write(c);
 						}
 
 						// mvn eclipse:eclipseを実行
@@ -119,17 +133,16 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 								stream.close();
 								break;
 							}
-							// TODO:コンソール出力に変更
-							System.out.print((char) c);
+							consoleStream.write(c);
 						}
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 
+					// ワークスペースにプロジェクトを作成
 					IWorkspaceRoot root = ResourcesPlugin.getWorkspace()
 							.getRoot();
 					IProject project = root.getProject(projectName);
-
 					if (defaultLocation) {
 						project.create(monitor);
 					} else {
@@ -138,8 +151,6 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 						desc.setLocation(directory);
 						project.create(desc, monitor);
 					}
-
-					// Open up this newly-created project in Eclipse
 					project.open(monitor);
 
 					monitor.worked(1);
