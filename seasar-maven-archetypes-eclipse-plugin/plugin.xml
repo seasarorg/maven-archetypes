@@ -41,4 +41,15 @@
             uri="https://www.seasar.org/maven/maven2-snapshot">
       </remoteRepository>
    </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+		<objectContribution adaptable="true"
+			id="org.seasar.maven.archetypes.eclipse.plugin.project.objectContribution"
+			objectClass="org.eclipse.core.resources.IProject">
+			<action
+				class="org.seasar.maven.archetypes.eclipse.plugin.project.ProjectRefreshAction"
+				enablesFor="1" id="org.seasar.maven.archetypes.eclipse.plugin.project.ProjectRefreshAction"
+				label="Mavenでプロジェクトをリフレッシュ" />
+		</objectContribution>
+   </extension>
 </plugin>
