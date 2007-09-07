@@ -17,44 +17,106 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.codehaus.cargo</groupId>
-				<artifactId>cargo-maven2-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>tomcat-start</id>
-						<phase>pre-integration-test</phase>
-						<goals>
-							<goal>start</goal>
-							<goal>deploy</goal>
-						</goals>
-						<configuration>
-							<wait>false</wait>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
 				<plugin>
-					<artifactId>maven-compiler-plugin</artifactId>
+					<artifactId>maven-eclipse-plugin</artifactId>
 					<configuration>
-						<encoding>UTF-8</encoding>
+						<wtpversion>1.5</wtpversion>
+						<downloadSources>true</downloadSources>
+						<downloadJavadocs>true</downloadJavadocs>
+						<additionalBuildcommands>
+							<buildCommand>
+								<name>
+									org.seasar.kijimuna.core.builder
+								</name>
+							</buildCommand>
+							<buildCommand>
+								<name>
+									org.seasar.kijimuna.core.validator
+								</name>
+							</buildCommand>
+							<buildCommand>
+								<name>
+									org.seasar.mayaa.matatabi.MatatabiBuilder
+								</name>
+							</buildCommand>
+						</additionalBuildcommands>
+						<additionalProjectnatures>
+							<projectnature>
+								org.seasar.dolteng.eclipse.nature
+							</projectnature>
+							<projectnature>
+								org.seasar.kijimuna.core.nature
+							</projectnature>
+							<projectnature>
+								org.seasar.mayaa.matatabi.MatatabiNature
+							</projectnature>
+							<projectnature>
+								org.seasar.dblauncher.nature
+							</projectnature>
+						</additionalProjectnatures>
+						<additionalConfig>
+							<file>
+								<name>
+									.settings/org.seasar.dblauncher.prefs
+								</name>
+								<content>
+									<![CDATA[baseDir=/${artifactId}/target/classes/data
+dbPortNo=9092
+eclipse.preferences.version=1
+isDebug=false
+webPortNo=8082]]>
+								</content>
+							</file>
+							<file>
+								<name>
+									.settings/org.seasar.dolteng.eclipse.prefs
+								</name>
+								<content>
+									<![CDATA[DaoType=S2Dao
+DefaultResourcePath=/${artifactId}/src/main/resources
+DefaultRootPackage=${groupId}
+DefaultSrcPath=/${artifactId}/src/main/java
+ViewType=Struts2+Mayaa
+eclipse.preferences.version=1
+instance/org.eclipse.core.net/org.eclipse.core.net.hasMigrated=true
+isHelpRemote=true
+WebContentsRoot=src/main/webapp/
+prefs.children=${artifactId},]]>
+								</content>
+							</file>
+							<file>
+								<name>
+									.settings/org.seasar.mayaa.matatabi.prefs
+								</name>
+								<content>
+									<![CDATA[defaultPackage=${groupId}
+duplicateIdAttribute=1
+eclipse.preferences.version=1
+invalidIdAttribute=1
+javaSourcePath=src/main/java
+missingIdAttribute=1
+namespaces.0=m\:http\://mayaa.seasar.org
+notexistIdAttribute=1
+replaceRule.0=*\:<m\:echo id\="$id"></m\:echo>
+replaceRule.1=\:
+replaceRule.2=\:
+replaceRule.3=\:
+replaceRule.4=\:
+undefineIdAttribute=1
+webRootPath=src/main/webapp
+]]>
+								</content>
+							</file>
+						</additionalConfig>
 					</configuration>
 				</plugin>
 				<plugin>
-					<groupId>org.codehaus.cargo</groupId>
-					<artifactId>cargo-maven2-plugin</artifactId>
+					<artifactId>maven-compiler-plugin</artifactId>
 					<configuration>
-						<container>
-							<containerId>tomcat5x</containerId>
-							<zipUrlInstaller>
-								<url>
-									http://www.apache.org/dist/tomcat/tomcat-5/v5.5.20/bin/apache-tomcat-5.5.20.zip
-								</url>
-							</zipUrlInstaller>
-						</container>
+						<encoding>UTF-8</encoding>
 					</configuration>
 				</plugin>
 			</plugins>
@@ -63,33 +125,45 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.seasar.mayaa</groupId>
-			<artifactId>struts2-mayaa-plugin</artifactId>
-			<version>1.0.0</version>
+			<artifactId>mayaa</artifactId>
+			<version>1.1.13</version>
 		</dependency>
 		<dependency>
 			<groupId>org.seasar.mayaa</groupId>
-			<artifactId>mayaa</artifactId>
-			<version>1.1.10</version>
+			<artifactId>struts2-mayaa-plugin</artifactId>
+			<version>1.0.1</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.seasar.struts2</groupId>
 			<artifactId>struts2-seasar-plugin</artifactId>
 			<version>1.0.0</version>
 		</dependency>
 		<dependency>
-			<groupId>org.seasar.container</groupId>
-			<artifactId>s2-extension</artifactId>
-			<version>2.4.13</version>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-core</artifactId>
+			<version>2.0.9</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.seasar.container</groupId>
-			<artifactId>s2-framework</artifactId>
-			<version>2.4.13</version>
+			<artifactId>s2-extension</artifactId>
+			<version>2.4.17</version>
 		</dependency>
 		<dependency>
 			<groupId>org.seasar.container</groupId>
 			<artifactId>s2-tiger</artifactId>
-			<version>2.4.13</version>
+			<version>2.4.17</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seasar.dao</groupId>
+			<artifactId>s2-dao</artifactId>
+			<version>1.0.46</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seasar.dao</groupId>
+			<artifactId>s2-dao-tiger</artifactId>
+			<version>1.0.46</version>
 		</dependency>
 		<dependency>
 			<groupId>geronimo-spec</groupId>
@@ -98,28 +172,14 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.geronimo.specs</groupId>
-			<artifactId>geronimo-annotation_1.0_spec</artifactId>
+			<artifactId>geronimo-jta_1.1_spec</artifactId>
 			<version>1.0</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.geronimo.specs</groupId>
-			<artifactId>geronimo-ejb_3.0_spec</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.geronimo.specs</groupId>
-			<artifactId>geronimo-jpa_3.0_spec</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.geronimo.specs</groupId>
-			<artifactId>geronimo-interceptor_3.0_spec</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.seasar.struts</groupId>
-			<artifactId>s2-struts-tiger</artifactId>
-			<version>1.3.0-RC1</version>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.0.20070304</version>
+			<type>jar</type>
 		</dependency>
 	</dependencies>
 	<repositories>

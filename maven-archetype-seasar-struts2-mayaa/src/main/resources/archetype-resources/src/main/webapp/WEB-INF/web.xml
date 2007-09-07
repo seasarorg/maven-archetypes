@@ -20,6 +20,10 @@
 		<filter-class>
 			org.apache.struts2.dispatcher.FilterDispatcher
 		</filter-class>
+		<init-param>
+			<param-name>actionPackages</param-name>
+			<param-value>${groupId}.web</param-value>
+		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>s2filter</filter-name>

@@ -1,6 +1,6 @@
-package ${package}.index.impl;
+package ${package}.service.impl;
 
-import ${package}.index.IndexService;
+import ${package}.service.IndexService;
 
 public class IndexServiceImpl implements IndexService {
 

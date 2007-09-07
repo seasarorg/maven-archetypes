@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.seasar.maven-archetypes</groupId>
 	<artifactId>maven-archetype-seasar-struts2-mayaa</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
 	<name>Maven Archetype for Seasar&amp;amp;Struts2&amp;amp;Mayaa</name>
 	<parent>

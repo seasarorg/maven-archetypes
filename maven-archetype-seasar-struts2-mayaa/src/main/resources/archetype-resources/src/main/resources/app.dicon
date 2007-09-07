@@ -3,4 +3,6 @@
 <components>
 	<include path="aop.dicon"/>
 	<include path="convention.dicon"/>
+	<include path="dao.dicon"/>
+	<include path="dxo.dicon"/>
 </components>

@@ -1,4 +1,4 @@
-package ${package}.index;
+package ${package}.web;
 
 import com.opensymphony.xwork2.ActionSupport;
 

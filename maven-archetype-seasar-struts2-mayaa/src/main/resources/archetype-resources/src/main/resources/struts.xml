@@ -5,6 +5,8 @@
 	<constant name="struts.locale" value="ja_JP" />
 	<constant name="struts.i18n.encoding" value="UTF-8" />
 	<constant name="struts.action.extension" value="html" />
+	<constant name="struts.configuration.classpath.defaultParentPackage"
+		value="default" />
 
 	<package name="default" extends="struts-default">
 		<result-types>
@@ -16,13 +18,7 @@
 
 		<global-results>
 			<result name="success" type="mayaa" />
+			<result name="input" type="mayaa" />
 		</global-results>
-
-		<action name="index"
-			class="${package}.index.IndexAction">
-			<result name="success" type="mayaa">
-				<param name="location">index.html</param>
-			</result>
-		</action>
 	</package>
 </struts>
